@@ -23,3 +23,4 @@ rootProject.name = "ShiftLearning"
 include(":app")
 include(":core:decompose")
 include(":core:network")
+include(":feature:user")
