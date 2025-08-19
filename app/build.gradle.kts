@@ -58,6 +58,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    
+    implementation(project(":core:decompose"))
 
     //Dagger2
     implementation(libs.dagger.android)
@@ -77,10 +79,6 @@ dependencies {
     //Room
     implementation(libs.room.core)
     ksp(libs.room.compiler)
-
-    //Decompose
-    implementation(libs.decompose.core)
-    implementation(libs.decompose.jetpack)
 
     //Mvi kotlin
     implementation(libs.mvikotlin.main)
