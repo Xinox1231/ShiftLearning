@@ -34,10 +34,14 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    //Okhttp
+    api(libs.okhttp)
+    api(libs.logging.interceptor)
+
+    //Gson
+    api(libs.gson)
+    api(libs.converter.gson)
+
+    //Retrofit
+    api(libs.retrofit)
 }

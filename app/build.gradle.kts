@@ -58,23 +58,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    
+
     implementation(project(":core:decompose"))
 
     //Dagger2
     implementation(libs.dagger.android)
     ksp(libs.dagger.compiler)
-
-    //Okhttp
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
-
-    //Gson
-    implementation(libs.gson)
-
-    //Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
 
     //Room
     implementation(libs.room.core)
