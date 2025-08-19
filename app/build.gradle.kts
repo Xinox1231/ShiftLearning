@@ -65,10 +65,6 @@ dependencies {
     implementation(libs.dagger.android)
     ksp(libs.dagger.compiler)
 
-    //Room
-    implementation(libs.room.core)
-    ksp(libs.room.compiler)
-
     //Mvi kotlin
     implementation(libs.mvikotlin.main)
     implementation(libs.mvikotlin.core)
