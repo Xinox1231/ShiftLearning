@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "ShiftLearning"
 include(":app")
 include(":core:decompose")
+include(":core:network")

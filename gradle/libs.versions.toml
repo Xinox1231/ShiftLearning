@@ -23,6 +23,8 @@ coil = "2.7.0"
 dagger = "2.52"
 mvikotlin = "3.2.1"
 jetbrainsKotlinJvm = "2.0.0"
+appcompat = "1.7.1"
+material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -62,6 +64,8 @@ dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "d
 mvikotlin-core = { group = "com.arkivanov.mvikotlin", name = "mvikotlin", version.ref = "mvikotlin" }
 mvikotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", version.ref = "mvikotlin" }
 mvikotlin-coroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -70,3 +74,4 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "co
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+android-library = { id = "com.android.library", version.ref = "agp" }
