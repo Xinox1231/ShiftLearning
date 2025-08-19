@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -56,4 +58,35 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Dagger2
+    implementation(libs.dagger.android)
+    ksp(libs.dagger.compiler)
+
+    //Okhttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    //Gson
+    implementation(libs.gson)
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    //Room
+    implementation(libs.room.core)
+    ksp(libs.room.compiler)
+
+    //Decompose
+    implementation(libs.decompose.core)
+    implementation(libs.decompose.jetpack)
+
+    //Mvi kotlin
+    implementation(libs.mvikotlin.main)
+    implementation(libs.mvikotlin.core)
+    implementation(libs.mvikotlin.coroutines)
+
+    //Coil
+    implementation(libs.coil)
 }
