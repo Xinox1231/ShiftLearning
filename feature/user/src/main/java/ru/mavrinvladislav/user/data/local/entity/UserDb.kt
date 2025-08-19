@@ -1,6 +1,12 @@
 package ru.mavrinvladislav.user.data.local.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity("users")
 data class UserDb(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
     val gender: GenderDb,
     val name: NameDb,
     val location: LocationDb,
