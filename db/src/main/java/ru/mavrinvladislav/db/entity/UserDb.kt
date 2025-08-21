@@ -1,5 +1,6 @@
 package ru.mavrinvladislav.db.entity
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -8,14 +9,14 @@ data class UserDb(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val gender: GenderDb,
-    val name: NameDb,
-    val location: LocationDb,
+    @Embedded val name: NameDb,
+    @Embedded val location: LocationDb,
     val email: String,
     val dateOfBirth: String,
     val age: Int,
-    val registered: RegistrationDb,
+    @Embedded val registered: RegistrationDb,
     val phone: String,
     val cell: String,
-    val picture: PictureDb,
+    @Embedded val picture: PictureDb,
     val nat: String
 )

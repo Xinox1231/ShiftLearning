@@ -1,11 +1,13 @@
 package ru.mavrinvladislav.db.entity
 
+import androidx.room.Embedded
+
 data class LocationDb(
-    val street: StreetDb,
+    @Embedded val street: StreetDb,
     val city: String,
     val state: String,
     val country: String,
     val postcode: String,
-    val coordinates: CoordinatesDb,
-    val timezone: TimezoneDb
+    @Embedded val coordinates: CoordinatesDb,
+    @Embedded val timezone: TimezoneDb
 )

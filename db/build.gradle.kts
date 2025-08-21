@@ -35,6 +35,10 @@ android {
 
 dependencies {
 
+    //Dagger2
+    implementation(libs.dagger.android)
+    ksp(libs.dagger.compiler)
+
     //Room
     api(libs.room.core)
     ksp(libs.room.compiler)

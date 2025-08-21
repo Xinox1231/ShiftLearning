@@ -19,8 +19,5 @@ interface UserModule {
 
         @Provides
         fun provideUserService(retrofit: Retrofit) = retrofit.create(UserService::class.java)
-
-        @Provides
-        fun provideUserDao(appDatabase: AppDatabase) = appDatabase.userDao()
     }
 }

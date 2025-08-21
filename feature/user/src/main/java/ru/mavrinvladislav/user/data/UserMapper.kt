@@ -1,6 +1,8 @@
 package ru.mavrinvladislav.user.data
 
 import ru.mavrinvladislav.db.entity.CoordinatesDb
+import ru.mavrinvladislav.db.entity.GenderDb
+import ru.mavrinvladislav.db.entity.LocationDb
 import ru.mavrinvladislav.db.entity.NameDb
 import ru.mavrinvladislav.db.entity.PictureDb
 import ru.mavrinvladislav.db.entity.RegistrationDb
@@ -8,6 +10,7 @@ import ru.mavrinvladislav.db.entity.StreetDb
 import ru.mavrinvladislav.db.entity.TimezoneDb
 import ru.mavrinvladislav.db.entity.UserDb
 import ru.mavrinvladislav.user.domain.model.Coordinates
+import ru.mavrinvladislav.user.domain.model.Gender
 import ru.mavrinvladislav.user.domain.model.Location
 import ru.mavrinvladislav.user.domain.model.Name
 import ru.mavrinvladislav.user.domain.model.Picture
@@ -23,16 +26,17 @@ fun UserDb.toDomain(): User = User(
     email = email,
     dateOfBirth = dateOfBirth,
     age = age,
-    login = login.toDomain(),
-    dob = dob.toDomain(),
     registered = registered.toDomain(),
     phone = phone,
     cell = cell,
-    id = id.toDomain(),
     picture = picture.toDomain(),
     nat = nat
 )
 
+fun GenderDb.toDomain(): Gender = when (this) {
+    GenderDb.MALE -> Gender.MALE
+    GenderDb.FEMALE -> Gender.FEMALE
+}
 
 fun NameDb.toDomain(): Name = Name(
     title = title,
@@ -40,7 +44,7 @@ fun NameDb.toDomain(): Name = Name(
     last = last
 )
 
-fun Location.toDomain(): Location = Location(
+fun LocationDb.toDomain(): Location = Location(
     street = street.toDomain(),
     city = city,
     state = state,
@@ -67,7 +71,7 @@ fun TimezoneDb.toDomain(): Timezone = Timezone(
 
 fun RegistrationDb.toDomain(): Registration = Registration(
     date = date,
-    age = age
+    age = yearsSinceRegistered
 )
 
 fun PictureDb.toDomain(): Picture = Picture(

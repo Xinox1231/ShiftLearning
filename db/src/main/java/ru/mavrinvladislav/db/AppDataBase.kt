@@ -4,11 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import ru.mavrinvladislav.db.dao.UserDao
+import ru.mavrinvladislav.db.entity.UserDb
+import ru.mavrinvladislav.db.type_converter.Converters
 
 @Database(
+    entities = [UserDb::class],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     companion object {
 
@@ -32,4 +38,5 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
+    internal abstract fun userDao(): UserDao
 }

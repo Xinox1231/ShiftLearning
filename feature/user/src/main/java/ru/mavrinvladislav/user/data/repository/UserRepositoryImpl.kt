@@ -3,7 +3,7 @@ package ru.mavrinvladislav.user.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import ru.mavrinvladislav.db.dao.UserDao
+import ru.mavrinvladislav.db.datasource.UserLocalDataSource
 import ru.mavrinvladislav.user.data.remote.UserService
 import ru.mavrinvladislav.user.data.toDomain
 import ru.mavrinvladislav.user.domain.model.User
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val api: UserService,
-    private val dao: UserDao
+    private val dao: UserLocalDataSource
 ) : UserRepository {
 
     override fun getUsers(page: Int): Flow<List<User>> {

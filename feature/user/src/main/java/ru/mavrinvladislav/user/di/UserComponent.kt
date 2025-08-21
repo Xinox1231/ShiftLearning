@@ -9,8 +9,8 @@ import dagger.Component
 interface UserComponent {
 
     @Component.Factory
-    interface Factory{
+    interface Factory {
 
-        fun create()
+        fun create(): UserComponent
     }
 }

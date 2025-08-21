@@ -3,12 +3,13 @@ package ru.mavrinvladislav.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import ru.mavrinvladislav.db.datasource.UserLocalDataSource
 import ru.mavrinvladislav.db.entity.UserDb
 
 @Dao
-interface UserDao {
+internal interface UserDao : UserLocalDataSource {
 
     @Query("SELECT * FROM users LIMIT :limit OFFSET :offset")
-    fun getUsersPage(limit: Int, offset: Int): Flow<List<UserDb>>
+    override fun getUsersPage(limit: Int, offset: Int): Flow<List<UserDb>>
 
 }

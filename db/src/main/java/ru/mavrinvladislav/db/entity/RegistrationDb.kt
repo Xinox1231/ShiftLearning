@@ -2,5 +2,5 @@ package ru.mavrinvladislav.db.entity
 
 data class RegistrationDb(
     val date: String,
-    val age: Int
+    val yearsSinceRegistered: Int
 )
