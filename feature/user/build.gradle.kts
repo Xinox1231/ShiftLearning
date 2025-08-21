@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -34,6 +35,7 @@ android {
 
 dependencies {
 
+    implementation(project(":core:network"))
     implementation(project(":db"))
 
     implementation(libs.androidx.core.ktx)
@@ -42,4 +44,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Dagger2
+    implementation(libs.dagger.android)
+    ksp(libs.dagger.compiler)
 }

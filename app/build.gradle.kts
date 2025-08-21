@@ -60,6 +60,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(project(":core:decompose"))
+    implementation(project(":feature:user"))
 
     //Dagger2
     implementation(libs.dagger.android)

@@ -1,4 +1,4 @@
-package ru.mavrinvladislav.user.data.local.entity
+package ru.mavrinvladislav.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

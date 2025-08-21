@@ -1,9 +1,9 @@
-package ru.mavrinvladislav.user.data.local
+package ru.mavrinvladislav.db.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import ru.mavrinvladislav.user.data.local.entity.UserDb
+import ru.mavrinvladislav.db.entity.UserDb
 
 @Dao
 interface UserDao {
