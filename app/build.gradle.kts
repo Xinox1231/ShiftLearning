@@ -60,12 +60,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(project(":core:decompose"))
+    implementation(project(":core:di"))
     implementation(project(":db"))
     implementation(project(":feature:user"))
 
-    //Dagger2
-    implementation(libs.dagger.android)
-    ksp(libs.dagger.compiler)
 
     //Mvi kotlin
     implementation(libs.mvikotlin.main)
@@ -74,4 +72,6 @@ dependencies {
 
     //Coil
     implementation(libs.coil)
+
+    ksp(libs.dagger.compiler)
 }
