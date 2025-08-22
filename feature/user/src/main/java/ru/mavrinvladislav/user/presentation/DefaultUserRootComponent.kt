@@ -65,6 +65,6 @@ class DefaultUserRootComponent @AssistedInject constructor(
         fun create(
             @Assisted("userDependencies") userDependencies: UserDependencies,
             @Assisted("componentContext") componentContext: ComponentContext
-        )
+        ): DefaultUserRootComponent
     }
 }

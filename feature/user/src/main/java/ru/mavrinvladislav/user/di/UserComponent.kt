@@ -6,6 +6,7 @@ import dagger.Component
     modules = [UserModule::class],
     dependencies = [UserDependencies::class]
 )
+@UserFeatureScope
 interface UserComponent {
 
     @Component.Factory

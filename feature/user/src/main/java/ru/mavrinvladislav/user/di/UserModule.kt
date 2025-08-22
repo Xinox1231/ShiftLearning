@@ -13,11 +13,13 @@ import ru.mavrinvladislav.user.domain.repository.UserRepository
 interface UserModule {
 
     @Binds
+    @UserFeatureScope
     fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 
     companion object {
 
         @Provides
+        @UserFeatureScope
         fun provideUserService(retrofit: Retrofit) = retrofit.create(UserService::class.java)
     }
 }

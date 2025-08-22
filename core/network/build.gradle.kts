@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -44,4 +45,7 @@ dependencies {
 
     //Retrofit
     api(libs.retrofit)
+
+    implementation(project(":core:di"))
+    ksp(libs.dagger.compiler)
 }
