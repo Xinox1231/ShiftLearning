@@ -37,6 +37,8 @@ dependencies {
 
     implementation(project(":core:di"))
 
+    ksp(libs.dagger.compiler)
+
     //Room
     api(libs.room.core)
     ksp(libs.room.compiler)

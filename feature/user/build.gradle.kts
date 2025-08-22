@@ -36,6 +36,7 @@ android {
 dependencies {
 
     implementation(project(":core:network"))
+    implementation(project(":core:decompose"))
     implementation(project(":db"))
 
     implementation(libs.androidx.core.ktx)

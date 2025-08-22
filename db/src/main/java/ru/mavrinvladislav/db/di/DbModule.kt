@@ -7,8 +7,6 @@ import ru.mavrinvladislav.db.AppDatabase
 import ru.mavrinvladislav.db.datasource.UserLocalDataSource
 import ru.mavrinvladislav.di.scopes.ApplicationScope
 
-
-@ApplicationScope
 @Module
 class DbModule {
 

@@ -5,12 +5,16 @@ import dagger.BindsInstance
 import dagger.Component
 import ru.mavrinvladislav.db.di.DbModule
 import ru.mavrinvladislav.di.scopes.ApplicationScope
+import ru.mavrinvladislav.shiftlearning.MainActivity
+import ru.mavrinvladislav.user.di.UserDependencies
 
 @ApplicationScope
 @Component(
     modules = [DbModule::class]
 )
-interface ApplicationComponent {
+interface ApplicationComponent : UserDependencies {
+
+    fun inject(activity: MainActivity)
 
     @Component.Factory
     interface Factory {

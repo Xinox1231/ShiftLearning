@@ -4,13 +4,13 @@ import dagger.Component
 
 @Component(
     modules = [UserModule::class],
-    dependencies = []
+    dependencies = [UserDependencies::class]
 )
-interface UserComponent {
+internal interface UserComponent {
 
     @Component.Factory
     interface Factory {
 
-        fun create(): UserComponent
+        fun create(deps: UserDependencies): UserComponent
     }
 }
