@@ -6,7 +6,7 @@ import dagger.Component
     modules = [UserModule::class],
     dependencies = [UserDependencies::class]
 )
-internal interface UserComponent {
+interface UserComponent {
 
     @Component.Factory
     interface Factory {

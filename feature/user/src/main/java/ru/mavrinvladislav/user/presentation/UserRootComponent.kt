@@ -2,17 +2,20 @@ package ru.mavrinvladislav.user.presentation
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
+import ru.mavrinvladislav.user.di.UserComponent
 import ru.mavrinvladislav.user.presentation.current_user.CurrentUserComponent
+import ru.mavrinvladislav.user.presentation.users.UsersComponent
 
-interface UserComponent {
+interface UserRootComponent {
 
     val stackNavigation: Value<ChildStack<*, UserChild>>
 
+    val userComponent: UserComponent
 }
 
 sealed interface UserChild{
 
-    data class Users(val component: UserComponent): UserChild
+    data class Users(val component: UsersComponent): UserChild
 
     data class CurrentUser(val component: CurrentUserComponent): UserChild
 }
