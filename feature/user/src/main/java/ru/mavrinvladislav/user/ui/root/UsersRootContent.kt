@@ -1,11 +1,11 @@
-package ru.mavrinvladislav.user.ui
+package ru.mavrinvladislav.user.ui.root
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
-import ru.mavrinvladislav.user.presentation.UserChild
-import ru.mavrinvladislav.user.presentation.UserRootComponent
-import ru.mavrinvladislav.user.ui.current_user.CurrentUserContent
-import ru.mavrinvladislav.user.ui.users.UsersContent
+import ru.mavrinvladislav.user.presentation.root.UserChild
+import ru.mavrinvladislav.user.presentation.root.UserRootComponent
+import ru.mavrinvladislav.user.ui.child.current_user.CurrentUserContent
+import ru.mavrinvladislav.user.ui.child.users.UsersContent
 
 @Composable
 fun UsersRootContent(component: UserRootComponent) {

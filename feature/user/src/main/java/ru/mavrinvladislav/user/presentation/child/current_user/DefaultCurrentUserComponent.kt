@@ -1,4 +1,4 @@
-package ru.mavrinvladislav.user.presentation.current_user
+package ru.mavrinvladislav.user.presentation.child.current_user
 
 import android.util.Log
 import dagger.assisted.AssistedFactory

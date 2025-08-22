@@ -1,10 +1,10 @@
-package ru.mavrinvladislav.user.presentation
+package ru.mavrinvladislav.user.presentation.root
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
 import ru.mavrinvladislav.user.di.UserComponent
-import ru.mavrinvladislav.user.presentation.current_user.CurrentUserComponent
-import ru.mavrinvladislav.user.presentation.users.UsersComponent
+import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserComponent
+import ru.mavrinvladislav.user.presentation.child.users.UsersComponent
 
 interface UserRootComponent {
 

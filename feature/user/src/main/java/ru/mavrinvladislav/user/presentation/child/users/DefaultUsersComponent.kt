@@ -1,4 +1,4 @@
-package ru.mavrinvladislav.user.presentation.users
+package ru.mavrinvladislav.user.presentation.child.users
 
 import android.util.Log
 import dagger.assisted.AssistedFactory

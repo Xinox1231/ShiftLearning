@@ -1,10 +1,9 @@
-package ru.mavrinvladislav.user.presentation
+package ru.mavrinvladislav.user.presentation.root
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
-import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.value.Value
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -13,8 +12,8 @@ import kotlinx.serialization.Serializable
 import ru.mavrinvladislav.user.di.DaggerUserComponent
 import ru.mavrinvladislav.user.di.UserComponent
 import ru.mavrinvladislav.user.di.UserDependencies
-import ru.mavrinvladislav.user.presentation.current_user.DefaultCurrentUserComponent
-import ru.mavrinvladislav.user.presentation.users.DefaultUsersComponent
+import ru.mavrinvladislav.user.presentation.child.current_user.DefaultCurrentUserComponent
+import ru.mavrinvladislav.user.presentation.child.users.DefaultUsersComponent
 
 class DefaultUserRootComponent @AssistedInject constructor(
     private val defaultUsersComponentFactory: DefaultUsersComponent.Factory,
