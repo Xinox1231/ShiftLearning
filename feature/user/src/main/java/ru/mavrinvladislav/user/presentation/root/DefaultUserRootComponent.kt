@@ -31,9 +31,6 @@ class DefaultUserRootComponent @AssistedInject constructor(
         childFactory = ::child
     )
 
-    override val userComponent: UserComponent =
-        DaggerUserComponent.factory().create(userDependencies)
-
     fun child(config: UserConfig, componentContext: ComponentContext): UserChild {
         return when (config) {
             UserConfig.CurrentUser -> {
@@ -42,7 +39,9 @@ class DefaultUserRootComponent @AssistedInject constructor(
             }
 
             UserConfig.Users -> {
-                val component = defaultUsersComponentFactory.create()
+                val component = defaultUsersComponentFactory.create(
+                    componentContext = componentContext
+                )
                 UserChild.Users(component)
             }
         }

@@ -3,6 +3,8 @@ package ru.mavrinvladislav.shiftlearning.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import retrofit2.Retrofit
+import ru.mavrinvladislav.db.datasource.UserLocalDataSource
 import ru.mavrinvladislav.db.di.DbModule
 import ru.mavrinvladislav.di.scopes.ApplicationScope
 import ru.mavrinvladislav.network.NetworkModule
@@ -13,10 +15,10 @@ import ru.mavrinvladislav.user.di.UserDependencies
 @Component(
     modules = [
         DbModule::class,
-        NetworkModule::class
+        NetworkModule::class,
     ]
 )
-interface ApplicationComponent : UserDependencies {
+interface ApplicationComponent: UserDependencies {
 
     fun inject(activity: MainActivity)
 
