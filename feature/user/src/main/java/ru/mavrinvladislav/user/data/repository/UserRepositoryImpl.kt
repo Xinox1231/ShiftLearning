@@ -1,11 +1,14 @@
 package ru.mavrinvladislav.user.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import ru.mavrinvladislav.db.datasource.UserLocalDataSource
 import ru.mavrinvladislav.user.data.remote.UserService
 import ru.mavrinvladislav.user.data.toDomain
+import ru.mavrinvladislav.user.data.toEntity
 import ru.mavrinvladislav.user.domain.model.User
 import ru.mavrinvladislav.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -25,18 +28,20 @@ class UserRepositoryImpl @Inject constructor(
                 val usersFromNetwork = api.fetchUsers(
                     page = page,
                     pageSize = PAGE_SIZE
-                ).body()
+                ).users.map {
+                    it.toEntity()
+                }
+                dao.addUsers(usersFromNetwork)
             }
-        }.map { users ->
-            users.map {
+        }.map { list ->
+            list.map {
                 it.toDomain()
             }
         }
+
     }
 
     companion object {
-
         private const val PAGE_SIZE = 10
-
     }
 }

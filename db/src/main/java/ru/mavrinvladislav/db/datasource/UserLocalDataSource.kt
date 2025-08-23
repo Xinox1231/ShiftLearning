@@ -6,4 +6,6 @@ import ru.mavrinvladislav.db.entity.UserDb
 interface UserLocalDataSource {
 
     fun getUsersPage(limit: Int, offset: Int): Flow<List<UserDb>>
+
+    suspend fun addUsers(users: List<UserDb>)
 }

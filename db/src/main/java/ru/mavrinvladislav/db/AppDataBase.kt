@@ -7,14 +7,12 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ru.mavrinvladislav.db.dao.UserDao
 import ru.mavrinvladislav.db.entity.UserDb
-import ru.mavrinvladislav.db.type_converter.Converters
 
 @Database(
     entities = [UserDb::class],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
-@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     companion object {
 
@@ -31,7 +29,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context = context,
                     klass = AppDatabase::class.java,
                     name = DB_NAME
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 instance = db
                 return db
             }

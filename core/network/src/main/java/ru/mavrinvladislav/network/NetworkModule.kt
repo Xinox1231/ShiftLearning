@@ -13,7 +13,7 @@ interface NetworkModule {
 
     companion object {
 
-        private const val BASE_URL = "https://www.youtube.com/"
+        private const val BASE_URL = "https://randomuser.me/api/"
 
         @Provides
         @ApplicationScope

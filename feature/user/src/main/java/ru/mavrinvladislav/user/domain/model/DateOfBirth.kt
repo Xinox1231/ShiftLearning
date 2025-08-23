@@ -1,6 +1,6 @@
 package ru.mavrinvladislav.user.domain.model
 
-data class Registration(
+data class DateOfBirth(
     val date: String,
-    val yearsSinceRegistered: Int
+    val age: String
 )

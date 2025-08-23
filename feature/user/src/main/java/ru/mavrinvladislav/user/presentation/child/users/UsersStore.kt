@@ -1,5 +1,6 @@
 package ru.mavrinvladislav.user.presentation.child.users
 
+import android.util.Log
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
@@ -45,7 +46,6 @@ class UsersStoreFactory @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
     private val storeFactory: StoreFactory
 ) {
-//Store типо вьюмодели, а на компоненте экран живёт
     fun create(): UsersStore =
         object : UsersStore, Store<Intent, State, Label> by storeFactory.create(
             name = "UsersStore",
@@ -104,6 +104,7 @@ class UsersStoreFactory @Inject constructor(
                         dispatch(Msg.FirstPageLoaded(users))
                     }
                 } catch (e: Exception) {
+                    Log.d("UsersStore", e.message.toString())
                     dispatch(Msg.Error)
                 }
             }

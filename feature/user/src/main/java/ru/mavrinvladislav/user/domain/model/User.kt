@@ -1,12 +1,11 @@
 package ru.mavrinvladislav.user.domain.model
 
 data class User(
-    val gender: Gender,
+    val gender: String,
     val name: Name,
     val location: Location,
     val email: String,
-    val dateOfBirth: String,
-    val age: Int,
+    val dateOfBirth: DateOfBirth,
     val registered: Registration,
     val phone: String,
     val cell: String,
