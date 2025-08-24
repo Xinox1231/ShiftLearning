@@ -38,6 +38,7 @@ android {
 dependencies {
 
     implementation(project(":core:network"))
+    implementation(project(":core:di"))
     implementation(project(":core:decompose"))
     implementation(project(":core:system-design"))
     implementation(project(":core:utils"))
@@ -53,19 +54,12 @@ dependencies {
     implementation(libs.material)
     testImplementation(libs.junit)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
-    //Mvi kotlin
     implementation(libs.mvikotlin.main)
     implementation(libs.mvikotlin.core)
     implementation(libs.mvikotlin.coroutines)
 
-    //Coil
     implementation(libs.coil)
 
-    //Dagger2
-    implementation(libs.dagger.android)
     ksp(libs.dagger.compiler)
 }
