@@ -11,7 +11,7 @@ import ru.mavrinvladislav.user.data.repository.UserRepositoryImpl
 import ru.mavrinvladislav.user.domain.repository.UserRepository
 
 @Module
-interface UserModule {
+internal interface UserModule {
 
     @Binds
     @UserFeatureScope

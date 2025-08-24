@@ -12,7 +12,7 @@ import ru.mavrinvladislav.user.domain.model.User
 import ru.mavrinvladislav.user.domain.repository.UserRepository
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
+internal class UserRepositoryImpl @Inject constructor(
     private val api: UserService,
     private val dao: UserLocalDataSource
 ) : UserRepository {

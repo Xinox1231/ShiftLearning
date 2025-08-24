@@ -16,6 +16,7 @@ import javax.inject.Inject
 interface CurrentUserStore : Store<Intent, State, Label> {
 
     sealed interface Intent {
+        data class OnPhoneClicked(val phone: String) : Intent
     }
 
     data class State(
@@ -33,6 +34,7 @@ interface CurrentUserStore : Store<Intent, State, Label> {
     }
 
     sealed interface Label {
+        data class OnPhoneClicked(val phone: String) : Label
     }
 }
 
@@ -73,6 +75,11 @@ class CurrentUserStoreFactory @Inject constructor(
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Msg, Label>() {
         override fun executeIntent(intent: Intent, getState: () -> State) {
+            when (intent) {
+                is Intent.OnPhoneClicked -> {
+                    publish(Label.OnPhoneClicked(intent.phone))
+                }
+            }
         }
 
         override fun executeAction(action: Action, getState: () -> State) {

@@ -2,7 +2,7 @@ package ru.mavrinvladislav.user.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserDto(
+internal data class UserDto(
     @SerializedName("gender") val gender: String,
     @SerializedName("name") val name: NameDto,
     @SerializedName("location") val location: LocationDto,

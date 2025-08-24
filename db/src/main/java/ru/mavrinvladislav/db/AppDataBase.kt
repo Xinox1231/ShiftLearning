@@ -10,10 +10,10 @@ import ru.mavrinvladislav.db.entity.UserDb
 
 @Database(
     entities = [UserDb::class],
-    version = 3,
+    version = 1,
     exportSchema = false,
 )
-abstract class AppDatabase : RoomDatabase() {
+internal abstract class AppDatabase : RoomDatabase() {
     companion object {
 
         private const val DB_NAME = "main.db"
@@ -38,5 +38,5 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    internal abstract fun userDao(): UserDao
+    abstract fun userDao(): UserDao
 }

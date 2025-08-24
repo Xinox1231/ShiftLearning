@@ -1,5 +1,7 @@
 package ru.mavrinvladislav.user.ui.child.current_user
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,30 +13,50 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import ru.mavrinvladislav.system_design.ui.compose.ActionIcon
 import ru.mavrinvladislav.system_design.ui.compose.BrandText
 import ru.mavrinvladislav.system_design.ui.compose.CustomAppBar
+import ru.mavrinvladislav.system_design.ui.compose.CustomTextButton
 import ru.mavrinvladislav.system_design.ui.compose.ShimmerBox
 import ru.mavrinvladislav.system_design.ui.compose.TextStyle
 import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserComponent
+import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserEvent
 import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserStore
 import ru.mavrinvladislav.user.ui.mapper.toUIModel
 import ru.mavrinvladislav.user.ui.model.UserUIModel
 import ru.mavrinvladislav.system_design.R as DesignR
+import androidx.core.net.toUri
 
 @Composable
-fun CurrentUserContent(
+internal fun CurrentUserContent(
     component: CurrentUserComponent
 ) {
 
     val model by component.model.collectAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(
+        component.event
+    ) {
+        component.event.collect {
+            when (it) {
+                is CurrentUserEvent.OpenDialer -> openDialer(
+                    context = context,
+                    phone = it.phone
+                )
+            }
+        }
+
+    }
 
     Scaffold(
         topBar = {
@@ -69,7 +91,11 @@ fun CurrentUserContent(
 
                         FullName(user.fullName)
 
-                        DetailedInfo(user, modifier = Modifier.padding(16.dp))
+                        DetailedInfo(
+                            user = user,
+                            modifier = Modifier.padding(16.dp),
+                            onPhoneClick = { component.onPhoneClick(it) }
+                        )
                     }
                 }
 
@@ -79,8 +105,20 @@ fun CurrentUserContent(
     }
 }
 
+private fun openDialer(context: Context, phone: String) {
+    val intent = Intent(Intent.ACTION_DIAL).apply {
+        data = "tel:${phone}".toUri()
+    }
+    context.startActivity(intent)
+}
+
 @Composable
-private fun DetailedInfo(user: UserUIModel, modifier: Modifier = Modifier) {
+private fun DetailedInfo(
+    user: UserUIModel,
+    modifier: Modifier = Modifier,
+    onPhoneClick: (String) -> Unit,
+
+    ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -90,9 +128,10 @@ private fun DetailedInfo(user: UserUIModel, modifier: Modifier = Modifier) {
             textStyle = TextStyle.REGULAR_16
         )
 
-        BrandText(
+        CustomTextButton(
             text = user.cell,
-            textStyle = TextStyle.REGULAR_16
+            textStyle = TextStyle.REGULAR_16,
+            onClick = { onPhoneClick(user.cell) }
         )
 
         BrandText(

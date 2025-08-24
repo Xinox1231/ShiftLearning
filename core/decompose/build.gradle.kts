@@ -33,6 +33,8 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
     api(libs.decompose.core)
     api(libs.decompose.jetpack)
 }

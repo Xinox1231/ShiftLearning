@@ -52,7 +52,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.material)
-    testImplementation(libs.junit)
     debugImplementation(libs.androidx.ui.tooling)
 
     implementation(libs.mvikotlin.main)

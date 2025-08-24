@@ -4,7 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import ru.mavrinvladislav.user.data.remote.model.UserResponse
 
-interface UserService {
+internal interface UserService {
 
     @GET(".")
     suspend fun fetchUsers(

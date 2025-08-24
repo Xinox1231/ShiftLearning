@@ -12,9 +12,9 @@ class DbModule {
 
     @ApplicationScope
     @Provides
-    fun provideDb(context: Context) = AppDatabase.getInstance(context)
+    internal fun provideDb(context: Context) = AppDatabase.getInstance(context)
 
     @Provides
-    fun provideUserLocalDataSource(appDatabase: AppDatabase): UserLocalDataSource =
+    internal fun provideUserLocalDataSource(appDatabase: AppDatabase): UserLocalDataSource =
         appDatabase.userDao()
 }

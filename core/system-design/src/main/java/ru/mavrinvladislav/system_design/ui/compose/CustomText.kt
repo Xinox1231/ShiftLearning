@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import ru.mavrinvladislav.system_design.ui.theme.ShiftTheme
 
@@ -14,109 +15,33 @@ fun BrandText(
     modifier: Modifier = Modifier,
     color: Color = ShiftTheme.colors.textPrimary,
     textAlign: TextAlign? = null,
+    underline: Boolean = false,
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,
     textStyle: TextStyle
 ) {
-    when (textStyle) {
-        TextStyle.TITLE_H2 -> {
-            Text(
-                text = text,
-                modifier = modifier,
-                color = color,
-                textAlign = textAlign,
-                maxLines = maxLines,
-                overflow = overflow,
-                style = ShiftTheme.typography.title_h2
-            )
-        }
+    val decoration = if (underline) TextDecoration.Underline else null
 
-        TextStyle.BUTTON -> {
-            Text(
-                text = text,
-                modifier = modifier,
-                color = color,
-                textAlign = textAlign,
-                maxLines = maxLines,
-                overflow = overflow,
-                style = ShiftTheme.typography.button
-            )
-        }
+    val style: androidx.compose.ui.text.TextStyle = when (textStyle) {
+        TextStyle.TITLE_H2 -> ShiftTheme.typography.title_h2
+        TextStyle.BUTTON -> ShiftTheme.typography.button
+        TextStyle.REGULAR_16 -> ShiftTheme.typography.regular_16
+        TextStyle.REGULAR_12 -> ShiftTheme.typography.regular_12
+        TextStyle.REGULAR_14 -> ShiftTheme.typography.regular_14
+        TextStyle.MEDIUM_14 -> ShiftTheme.typography.medium_14
+        TextStyle.MEDIUM_16 -> ShiftTheme.typography.medium_16
+        TextStyle.BOTTOM_BAR -> ShiftTheme.typography.bottom
+    }.copy(textDecoration = decoration) // применяем underline если нужно
 
-        TextStyle.REGULAR_16 -> {
-            Text(
-                text = text,
-                modifier = modifier,
-                color = color,
-                textAlign = textAlign,
-                maxLines = maxLines,
-                overflow = overflow,
-                style = ShiftTheme.typography.regular_16
-            )
-        }
-
-        TextStyle.REGULAR_12 -> {
-            Text(
-                text = text,
-                modifier = modifier,
-                color = color,
-                textAlign = textAlign,
-                maxLines = maxLines,
-                overflow = overflow,
-                style = ShiftTheme.typography.regular_12
-            )
-        }
-
-        TextStyle.REGULAR_14 -> {
-            Text(
-                text = text,
-                modifier = modifier,
-                color = color,
-                textAlign = textAlign,
-                maxLines = maxLines,
-                overflow = overflow,
-                style = ShiftTheme.typography.regular_14
-            )
-        }
-
-        TextStyle.MEDIUM_14 -> {
-            Text(
-                text = text,
-                modifier = modifier,
-                color = color,
-                textAlign = textAlign,
-                maxLines = maxLines,
-                overflow = overflow,
-                style = ShiftTheme.typography.medium_14
-            )
-        }
-
-        TextStyle.MEDIUM_16 -> {
-            Text(
-                text = text,
-                modifier = modifier,
-                color = color,
-                textAlign = textAlign,
-                maxLines = maxLines,
-                overflow = overflow,
-                style = ShiftTheme.typography.medium_16
-            )
-
-        }
-
-        TextStyle.BOTTOM_BAR -> {
-            Text(
-                text = text,
-                modifier = modifier,
-                color = color,
-                textAlign = textAlign,
-                maxLines = maxLines,
-                overflow = overflow,
-                style = ShiftTheme.typography.bottom
-            )
-        }
-
-    }
+    Text(
+        text = text,
+        modifier = modifier,
+        color = color,
+        textAlign = textAlign,
+        maxLines = maxLines,
+        overflow = overflow,
+        style = style
+    )
 }
 
 enum class TextStyle {

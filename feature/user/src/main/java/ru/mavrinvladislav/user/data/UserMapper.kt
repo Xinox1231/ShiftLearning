@@ -28,7 +28,7 @@ import ru.mavrinvladislav.user.domain.model.Street
 import ru.mavrinvladislav.user.domain.model.Timezone
 import ru.mavrinvladislav.user.domain.model.User
 
-fun UserDto.toEntity(): UserDb =
+internal fun UserDto.toEntity(): UserDb =
     UserDb(
         gender = gender,
         name = name.toEntity(),
@@ -42,32 +42,32 @@ fun UserDto.toEntity(): UserDb =
         nat = nat
     )
 
-fun NameDto.toEntity(): NameDb =
+internal fun NameDto.toEntity(): NameDb =
     NameDb(
         title = title,
         first = first,
         last = last
     )
 
-fun StreetDto.toEntity(): StreetDb =
+internal fun StreetDto.toEntity(): StreetDb =
     StreetDb(
         number = number,
         name = name
     )
 
-fun CoordinatesDto.toEntity(): CoordinatesDb =
+internal fun CoordinatesDto.toEntity(): CoordinatesDb =
     CoordinatesDb(
         latitude = latitude,
         longitude = longitude
     )
 
-fun TimezoneDto.toEntity(): TimezoneDb =
+internal fun TimezoneDto.toEntity(): TimezoneDb =
     TimezoneDb(
         offset = offset,
         description = description
     )
 
-fun LocationDto.toEntity(): LocationDb =
+internal fun LocationDto.toEntity(): LocationDb =
     LocationDb(
         street = street.toEntity(),
         city = city,
@@ -78,26 +78,26 @@ fun LocationDto.toEntity(): LocationDb =
         timezone = timezone.toEntity()
     )
 
-fun DateOfBirthDto.toEntity(): DateOfBirthDb =
+internal fun DateOfBirthDto.toEntity(): DateOfBirthDb =
     DateOfBirthDb(
         date = date,
         age = age
     )
 
-fun RegistrationDto.toEntity(): RegistrationDb =
+internal fun RegistrationDto.toEntity(): RegistrationDb =
     RegistrationDb(
         date = date,
         yearsSinceRegistered = yearsSinceRegistered
     )
 
-fun PictureDto.toEntity(): PictureDb =
+internal fun PictureDto.toEntity(): PictureDb =
     PictureDb(
         large = large,
         medium = medium,
         thumbnail = thumbnail
     )
 
-fun UserDb.toDomain(): User =
+internal fun UserDb.toDomain(): User =
     User(
         id = id,
         gender = gender,
@@ -112,32 +112,32 @@ fun UserDb.toDomain(): User =
         nat = nat
     )
 
-fun NameDb.toDomain(): Name =
+internal fun NameDb.toDomain(): Name =
     Name(
         title = title,
         first = first,
         last = last
     )
 
-fun StreetDb.toDomain(): Street =
+internal fun StreetDb.toDomain(): Street =
     Street(
         number = number,
         name = name
     )
 
-fun CoordinatesDb.toDomain(): Coordinates =
+internal fun CoordinatesDb.toDomain(): Coordinates =
     Coordinates(
         latitude = latitude,
         longitude = longitude
     )
 
-fun TimezoneDb.toDomain(): Timezone =
+internal fun TimezoneDb.toDomain(): Timezone =
     Timezone(
         offset = offset,
         description = description
     )
 
-fun LocationDb.toDomain(): Location =
+internal fun LocationDb.toDomain(): Location =
     Location(
         street = street.toDomain(),
         city = city,
@@ -148,19 +148,19 @@ fun LocationDb.toDomain(): Location =
         timezone = timezone.toDomain()
     )
 
-fun DateOfBirthDb.toDomain(): DateOfBirth =
+internal fun DateOfBirthDb.toDomain(): DateOfBirth =
     DateOfBirth(
         date = date,
         age = age
     )
 
-fun RegistrationDb.toDomain(): Registration =
+internal fun RegistrationDb.toDomain(): Registration =
     Registration(
         date = date,
         yearsSinceRegistered = yearsSinceRegistered
     )
 
-fun PictureDb.toDomain(): Picture =
+internal fun PictureDb.toDomain(): Picture =
     Picture(
         large = large,
         medium = medium,
