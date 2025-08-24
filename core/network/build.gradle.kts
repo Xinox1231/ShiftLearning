@@ -11,7 +11,6 @@ android {
     defaultConfig {
         minSdk = 26
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -35,15 +34,12 @@ android {
 
 dependencies {
 
-    //Okhttp
     api(libs.okhttp)
     api(libs.logging.interceptor)
 
-    //Gson
     api(libs.gson)
     api(libs.converter.gson)
 
-    //Retrofit
     api(libs.retrofit)
 
     implementation(project(":core:di"))
