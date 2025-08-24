@@ -8,7 +8,11 @@ interface CurrentUserComponent {
     val model: StateFlow<CurrentUserStore.State>
     val event: Flow<CurrentUserEvent>
 
-    fun onPhoneClick(phone: String)
+    fun onPhoneClick()
+
+    fun onEmailClick()
+
+    fun onCoordinatesClick()
 
     fun onClickBack()
 }

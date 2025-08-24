@@ -6,17 +6,22 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import kotlinx.coroutines.launch
+import ru.mavrinvladislav.user.domain.model.Coordinates
 import ru.mavrinvladislav.user.domain.model.User
 import ru.mavrinvladislav.user.domain.usecase.GetCurrentUserUseCase
 import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserStore.Intent
 import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserStore.Label
+import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserStore.Label.*
 import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserStore.State
+import ru.mavrinvladislav.user.presentation.child.users.UsersStore
 import javax.inject.Inject
 
 interface CurrentUserStore : Store<Intent, State, Label> {
 
     sealed interface Intent {
-        data class OnPhoneClicked(val phone: String) : Intent
+        data object OnPhoneClicked : Intent
+        data object OnEmailClicked : Intent
+        data object OnCoordinatesClicked : Intent
     }
 
     data class State(
@@ -35,6 +40,8 @@ interface CurrentUserStore : Store<Intent, State, Label> {
 
     sealed interface Label {
         data class OnPhoneClicked(val phone: String) : Label
+        data class OnEmailClicked(val email: String) : Label
+        data class OnCoordinatesClicked(val coordinates: Coordinates) : Label
     }
 }
 
@@ -77,8 +84,26 @@ class CurrentUserStoreFactory @Inject constructor(
         override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
                 is Intent.OnPhoneClicked -> {
-                    publish(Label.OnPhoneClicked(intent.phone))
+                    val state = getState()
+                    if (state.state is State.UserState.Loaded) {
+                        publish(OnPhoneClicked(state.state.user.phone))
+                    }
                 }
+
+                is Intent.OnEmailClicked -> {
+                    val state = getState()
+                    if (state.state is State.UserState.Loaded) {
+                        publish(OnEmailClicked(state.state.user.email))
+                    }
+                }
+
+                is Intent.OnCoordinatesClicked -> {
+                    val state = getState()
+                    if (state.state is State.UserState.Loaded) {
+                        publish(OnCoordinatesClicked(state.state.user.location.coordinates))
+                    }
+                }
+
             }
         }
 

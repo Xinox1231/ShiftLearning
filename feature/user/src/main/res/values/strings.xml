@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="choose_map_mesage">Выберите приложение карты</string>
+    <string name="choose_email_message">Выберите почтовое приложение</string>
+</resources>

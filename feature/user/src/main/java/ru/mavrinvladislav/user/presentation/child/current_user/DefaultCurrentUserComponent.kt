@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import ru.mavrinvladislav.decompose.componentScope
+import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserEvent.*
 
 class DefaultCurrentUserComponent @AssistedInject constructor(
     private val currentUserStoreFactory: CurrentUserStoreFactory,
@@ -35,21 +36,37 @@ class DefaultCurrentUserComponent @AssistedInject constructor(
     override val event: Flow<CurrentUserEvent>
         get() = _event.receiveAsFlow()
 
-
     init {
         store.labels.onEach {
             when (it) {
                 is CurrentUserStore.Label.OnPhoneClicked -> {
-                    _event.send(CurrentUserEvent.OpenDialer(it.phone))
+                    _event.send(OpenDialer(it.phone))
                 }
+
+                is CurrentUserStore.Label.OnEmailClicked -> {
+                    _event.send(OpenEmail(it.email))
+                }
+
+                is CurrentUserStore.Label.OnCoordinatesClicked -> {
+                    _event.send(OpenMap(it.coordinates))
+                }
+
             }
         }.launchIn(scope)
     }
 
     override val model: StateFlow<CurrentUserStore.State> = store.stateFlow
 
-    override fun onPhoneClick(phone: String) {
-        store.accept(CurrentUserStore.Intent.OnPhoneClicked(phone))
+    override fun onPhoneClick() {
+        store.accept(CurrentUserStore.Intent.OnPhoneClicked)
+    }
+
+    override fun onEmailClick() {
+        store.accept(CurrentUserStore.Intent.OnEmailClicked)
+    }
+
+    override fun onCoordinatesClick() {
+        store.accept(CurrentUserStore.Intent.OnCoordinatesClicked)
     }
 
     override fun onClickBack() = onBackClick()

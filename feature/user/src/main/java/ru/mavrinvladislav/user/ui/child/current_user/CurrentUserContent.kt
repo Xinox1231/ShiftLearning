@@ -2,6 +2,7 @@ package ru.mavrinvladislav.user.ui.child.current_user
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import coil.compose.SubcomposeAsyncImage
 import ru.mavrinvladislav.system_design.ui.compose.ActionIcon
 import ru.mavrinvladislav.system_design.ui.compose.BrandText
@@ -28,13 +30,13 @@ import ru.mavrinvladislav.system_design.ui.compose.CustomAppBar
 import ru.mavrinvladislav.system_design.ui.compose.CustomTextButton
 import ru.mavrinvladislav.system_design.ui.compose.ShimmerBox
 import ru.mavrinvladislav.system_design.ui.compose.TextStyle
+import ru.mavrinvladislav.user.R
 import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserComponent
 import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserEvent
 import ru.mavrinvladislav.user.presentation.child.current_user.CurrentUserStore
 import ru.mavrinvladislav.user.ui.mapper.toUIModel
 import ru.mavrinvladislav.user.ui.model.UserUIModel
 import ru.mavrinvladislav.system_design.R as DesignR
-import androidx.core.net.toUri
 
 @Composable
 internal fun CurrentUserContent(
@@ -53,6 +55,18 @@ internal fun CurrentUserContent(
                     context = context,
                     phone = it.phone
                 )
+
+                is CurrentUserEvent.OpenEmail -> openEmail(
+                    context = context,
+                    email = it.email
+                )
+
+                is CurrentUserEvent.OpenMap -> openMap(
+                    context = context,
+                    latitude = it.coordinates.latitude.toDouble(),
+                    longitude = it.coordinates.longitude.toDouble()
+                )
+
             }
         }
 
@@ -94,7 +108,9 @@ internal fun CurrentUserContent(
                         DetailedInfo(
                             user = user,
                             modifier = Modifier.padding(16.dp),
-                            onPhoneClick = { component.onPhoneClick(it) }
+                            onPhoneClick = component::onPhoneClick,
+                            onEmailClick = component::onEmailClick,
+                            onCoordinatesClick = component::onCoordinatesClick
                         )
                     }
                 }
@@ -112,13 +128,46 @@ private fun openDialer(context: Context, phone: String) {
     context.startActivity(intent)
 }
 
+private fun openMap(
+    context: Context,
+    latitude: Double,
+    longitude: Double,
+    label: String = ""
+) {
+    val geoUri = "geo:$latitude,$longitude?q=$latitude,$longitude(${Uri.encode(label)})"
+    val intent = Intent(Intent.ACTION_VIEW, geoUri.toUri())
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            context.getString(R.string.choose_map_mesage)
+        )
+    )
+}
+
+private fun openEmail(
+    context: Context,
+    email: String
+) {
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        data = "mailto:${email}".toUri()
+    }
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            context.getString(R.string.choose_email_message)
+        )
+    )
+
+}
+
 @Composable
 private fun DetailedInfo(
     user: UserUIModel,
     modifier: Modifier = Modifier,
-    onPhoneClick: (String) -> Unit,
-
-    ) {
+    onPhoneClick: () -> Unit,
+    onEmailClick: () -> Unit,
+    onCoordinatesClick: () -> Unit,
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -131,12 +180,13 @@ private fun DetailedInfo(
         CustomTextButton(
             text = user.cell,
             textStyle = TextStyle.REGULAR_16,
-            onClick = { onPhoneClick(user.cell) }
+            onClick = onPhoneClick
         )
 
-        BrandText(
+        CustomTextButton(
             text = user.email,
-            textStyle = TextStyle.REGULAR_16
+            textStyle = TextStyle.REGULAR_16,
+            onClick = onEmailClick
         )
 
         BrandText(
@@ -144,9 +194,10 @@ private fun DetailedInfo(
             textStyle = TextStyle.REGULAR_16
         )
 
-        BrandText(
+        CustomTextButton(
             text = user.coordinates,
-            textStyle = TextStyle.REGULAR_16
+            textStyle = TextStyle.REGULAR_16,
+            onClick = onCoordinatesClick
         )
 
         BrandText(
