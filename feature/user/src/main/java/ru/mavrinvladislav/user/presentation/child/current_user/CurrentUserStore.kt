@@ -30,8 +30,6 @@ interface CurrentUserStore : Store<Intent, State, Label> {
         sealed interface UserState {
             data object Initial : UserState
 
-            data object Loading : UserState
-
             data class Loaded(
                 val user: User
             ) : UserState
@@ -70,7 +68,6 @@ class CurrentUserStoreFactory @Inject constructor(
     }
 
     private sealed interface Msg {
-        data object Loading : Msg
         data class Loaded(val user: User) : Msg
     }
 
@@ -110,7 +107,6 @@ class CurrentUserStoreFactory @Inject constructor(
         override fun executeAction(action: Action, getState: () -> State) {
             when (action) {
                 is Action.StartLoading -> {
-                    dispatch(Msg.Loading)
                     scope.launch {
                         val user = getCurrentUserUseCase(action.userId)
                         dispatch(Msg.Loaded(user))
@@ -123,11 +119,6 @@ class CurrentUserStoreFactory @Inject constructor(
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State =
             when (msg) {
-                is Msg.Loading -> {
-                    copy(
-                        state = State.UserState.Loading
-                    )
-                }
 
                 is Msg.Loaded -> {
                     copy(

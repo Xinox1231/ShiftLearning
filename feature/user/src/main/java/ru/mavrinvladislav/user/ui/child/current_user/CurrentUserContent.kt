@@ -90,34 +90,44 @@ internal fun CurrentUserContent(
             when (val state = model.state) {
                 is CurrentUserStore.State.UserState.Initial -> Unit
 
-                is CurrentUserStore.State.UserState.Loaded -> {
-
-                    val user = state.user.toUIModel()
-
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                    ) {
-                        Spacer(modifier = Modifier.size(16.dp))
-
-                        UserPicture(imageUrl = user.picture)
-
-                        Spacer(modifier = Modifier.size(16.dp))
-
-                        FullName(user.fullName)
-
-                        DetailedInfo(
-                            user = user,
-                            modifier = Modifier.padding(16.dp),
-                            onPhoneClick = component::onPhoneClick,
-                            onEmailClick = component::onEmailClick,
-                            onCoordinatesClick = component::onCoordinatesClick
-                        )
-                    }
-                }
-
-                is CurrentUserStore.State.UserState.Loading -> {}
+                is CurrentUserStore.State.UserState.Loaded -> LoadedContent(
+                    state = state,
+                    onPhoneClick = component::onPhoneClick,
+                    onEmailClick = component::onEmailClick,
+                    onCoordinatesClick = component::onCoordinatesClick
+                )
             }
         }
+    }
+}
+
+@Composable
+private fun LoadedContent(
+    state: CurrentUserStore.State.UserState.Loaded,
+    onPhoneClick: () -> Unit,
+    onEmailClick: () -> Unit,
+    onCoordinatesClick: () -> Unit,
+) {
+    val user = state.user.toUIModel()
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        Spacer(modifier = Modifier.size(16.dp))
+
+        UserPicture(imageUrl = user.picture)
+
+        Spacer(modifier = Modifier.size(16.dp))
+
+        FullName(user.fullName)
+
+        DetailedInfo(
+            user = user,
+            modifier = Modifier.padding(16.dp),
+            onPhoneClick = onPhoneClick,
+            onEmailClick = onEmailClick,
+            onCoordinatesClick = onCoordinatesClick
+        )
     }
 }
 
