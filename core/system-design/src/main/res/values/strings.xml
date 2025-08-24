@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="component_error_title">Упс, произошла ошибка</string>
+    <string name="component_error_text">Ищем проблему</string>
+    <string name="update_button">Обновить</string>
+</resources>

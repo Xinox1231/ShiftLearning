@@ -8,7 +8,6 @@ interface UserService {
 
     @GET(".")
     suspend fun fetchUsers(
-        @Query("page") page: Int,
         @Query("results") pageSize: Int
     ): UserResponse
 }

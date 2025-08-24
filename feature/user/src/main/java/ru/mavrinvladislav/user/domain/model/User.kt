@@ -1,6 +1,7 @@
 package ru.mavrinvladislav.user.domain.model
 
 data class User(
+    val id: Long,
     val gender: String,
     val name: Name,
     val location: Location,

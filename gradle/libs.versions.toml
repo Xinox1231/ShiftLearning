@@ -25,6 +25,7 @@ mvikotlin = "3.2.1"
 jetbrainsKotlinJvm = "2.0.0"
 appcompat = "1.7.1"
 material = "1.12.0"
+accompanist = "0.31.5-beta"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -66,6 +67,7 @@ mvikotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", v
 mvikotlin-coroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

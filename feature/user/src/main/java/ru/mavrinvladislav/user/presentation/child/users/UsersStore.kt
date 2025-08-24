@@ -1,16 +1,17 @@
 package ru.mavrinvladislav.user.presentation.child.users
 
-import android.util.Log
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import jakarta.inject.Inject
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import ru.mavrinvladislav.user.domain.model.User
+import ru.mavrinvladislav.user.domain.usecase.ClearUsersUseCase
 import ru.mavrinvladislav.user.domain.usecase.GetUsersUseCase
 import ru.mavrinvladislav.user.presentation.child.users.UsersStore.Intent
 import ru.mavrinvladislav.user.presentation.child.users.UsersStore.Label
@@ -19,31 +20,27 @@ import ru.mavrinvladislav.user.presentation.child.users.UsersStore.State
 interface UsersStore : Store<Intent, State, Label> {
 
     sealed interface Intent {
-        data object LoadNextPage : Intent
+        data object ReloadPage : Intent
+        data object LoadNewUsers : Intent
     }
 
     data class State(
-        val usersState: UsersState,
-        val isNextPageLoading: Boolean,
-        val page: Int,
+        val usersState: UsersState
     ) {
         sealed interface UsersState {
             data object Initial : UsersState
-
-            data object FirstPageLoading : UsersState
-
+            data object Loading : UsersState
             data class Loaded(val users: List<User>) : UsersState
-
             data object Error : UsersState
         }
     }
 
-    sealed interface Label {
-    }
+    sealed interface Label
 }
 
 class UsersStoreFactory @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
+    private val clearUsersUseCase: ClearUsersUseCase,
     private val storeFactory: StoreFactory
 ) {
     fun create(): UsersStore =
@@ -51,8 +48,6 @@ class UsersStoreFactory @Inject constructor(
             name = "UsersStore",
             initialState = State(
                 usersState = State.UsersState.Initial,
-                isNextPageLoading = false,
-                page = START_PAGE
             ),
             bootstrapper = BootstrapperImpl(),
             executorFactory = ::ExecutorImpl,
@@ -60,17 +55,13 @@ class UsersStoreFactory @Inject constructor(
         ) {}
 
     private sealed interface Action {
-
         data object StartLoading : Action
     }
 
     private sealed interface Msg {
-
-        data object StartLoading : Msg
-        data class FirstPageLoaded(val users: List<User>) : Msg
-        data class NextPageLoaded(val users: List<User>, val nextPageNumber: Int) : Msg
+        data object Loading : Msg
+        data class Loaded(val users: List<User>) : Msg
         data object Error : Msg
-        data object IncrementPage : Msg
     }
 
     private class BootstrapperImpl : CoroutineBootstrapper<Action>() {
@@ -80,92 +71,70 @@ class UsersStoreFactory @Inject constructor(
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Msg, Label>() {
-        override fun executeIntent(intent: Intent, getState: () -> State) {
-            when (intent) {
-                is Intent.LoadNextPage -> loadNextPage(getState)
-            }
+
+        private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            dispatch(Msg.Error)
         }
+
+        private var loadUsersJob: Job? = null
 
         override fun executeAction(action: Action, getState: () -> State) {
             when (action) {
-                Action.StartLoading -> loadFirstPage(getState)
-            }
-        }
-
-        private fun loadFirstPage(getState: () -> State) {
-            val state = getState()
-            if (state.usersState is State.UsersState.FirstPageLoading) return
-
-            dispatch(Msg.StartLoading)
-
-            scope.launch(SupervisorJob()) {
-                try {
-                    getUsersUseCase(START_PAGE).collect { users ->
-                        dispatch(Msg.FirstPageLoaded(users))
-                    }
-                } catch (e: Exception) {
-                    Log.d("UsersStore", e.message.toString())
-                    dispatch(Msg.Error)
+                Action.StartLoading -> {
+                    loadUsers(getState)
                 }
             }
         }
 
-        private fun loadNextPage(getState: () -> State) {
-            val state = getState()
+        override fun executeIntent(intent: Intent, getState: () -> State) {
+            when (intent) {
+                is Intent.LoadNewUsers -> loadNewUsers(getState)
+                is Intent.ReloadPage -> loadUsers(getState)
 
-            if (state.isNextPageLoading) return
+            }
+        }
 
-            val nextPage = state.page + 1
-            dispatch(Msg.IncrementPage) // пометим, что пошла загрузка
-
+        private fun loadNewUsers(getState: () -> State) {
             scope.launch {
-                try {
-                    getUsersUseCase(nextPage).collect { users ->
-                        dispatch(Msg.NextPageLoaded(users, nextPage))
-                    }
-                } catch (e: Exception) {
-                    dispatch(Msg.Error)
+                clearUsersUseCase()
+                loadUsers(getState)
+            }
+        }
+
+        private fun loadUsers(getState: () -> State) {
+            val currentState = getState()
+            if (currentState is State.UsersState.Loading) return
+            loadUsersJob?.cancel()
+            loadUsersJob = scope.launch(exceptionHandler + SupervisorJob()) {
+                dispatch(Msg.Loading)
+                getUsersUseCase().collect {
+                    dispatch(Msg.Loaded(it))
                 }
             }
         }
     }
-
 
     private object ReducerImpl : Reducer<State, Msg> {
-        override fun State.reduce(msg: Msg): State =
-            when (msg) {
-                is Msg.StartLoading -> copy(
-                    usersState = State.UsersState.FirstPageLoading,
-                    isNextPageLoading = false
-                )
-
-                is Msg.FirstPageLoaded -> copy(
-                    usersState = State.UsersState.Loaded(msg.users),
-                    isNextPageLoading = false,
-                    page = START_PAGE
-                )
-
-                is Msg.IncrementPage -> copy(isNextPageLoading = true)
-
-                is Msg.NextPageLoaded -> copy(
-                    usersState = when (val current = usersState) {
-                        is State.UsersState.Loaded -> State.UsersState.Loaded(current.users + msg.users)
-                        else -> usersState
-                    },
-                    isNextPageLoading = false,
-                    page = msg.nextPageNumber
-                )
-
-                is Msg.Error -> copy(
-                    usersState = State.UsersState.Error,
-                    isNextPageLoading = false
+        override fun State.reduce(msg: Msg): State = when (msg) {
+            is Msg.Loading -> {
+                copy(
+                    usersState = State.UsersState.Loading
                 )
             }
-    }
 
+            is Msg.Error -> {
+                copy(
+                    usersState = State.UsersState.Error
+                )
+            }
 
-    companion object {
-
-        private const val START_PAGE = 1
+            is Msg.Loaded -> {
+                copy(
+                    usersState = State.UsersState.Loaded(
+                        users = msg.users
+                    )
+                )
+            }
+        }
     }
 }

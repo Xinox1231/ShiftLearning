@@ -4,6 +4,8 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -18,7 +20,6 @@ import ru.mavrinvladislav.user.presentation.child.users.DefaultUsersComponent
 class DefaultUserRootComponent @AssistedInject constructor(
     private val defaultUsersComponentFactory: DefaultUsersComponent.Factory,
     private val defaultCurrentUserComponentFactory: DefaultCurrentUserComponent.Factory,
-    @Assisted("userDependencies") private val userDependencies: UserDependencies,
     @Assisted("componentContext") componentContext: ComponentContext
 ) : UserRootComponent, ComponentContext by componentContext {
 
@@ -27,20 +28,32 @@ class DefaultUserRootComponent @AssistedInject constructor(
     override val stackNavigation: Value<ChildStack<*, UserChild>> = childStack(
         source = navigation,
         serializer = UserConfig.serializer(),
+        handleBackButton = true,
         initialConfiguration = UserConfig.Users,
         childFactory = ::child
     )
 
     fun child(config: UserConfig, componentContext: ComponentContext): UserChild {
         return when (config) {
-            UserConfig.CurrentUser -> {
-                val component = defaultCurrentUserComponentFactory.create()
+            is UserConfig.CurrentUser -> {
+                val component = defaultCurrentUserComponentFactory.create(
+                    userId = config.userId,
+                    onBackClick = { navigation.pop() },
+                    componentContext = componentContext
+                )
                 UserChild.CurrentUser(component)
             }
 
-            UserConfig.Users -> {
+            is UserConfig.Users -> {
                 val component = defaultUsersComponentFactory.create(
-                    componentContext = componentContext
+                    componentContext = componentContext,
+                    onUserClick = {
+                        navigation.push(
+                            UserConfig.CurrentUser(
+                                userId = it
+                            )
+                        )
+                    }
                 )
                 UserChild.Users(component)
             }
@@ -48,20 +61,19 @@ class DefaultUserRootComponent @AssistedInject constructor(
     }
 
     @Serializable
-    sealed interface UserConfig {
+    sealed class UserConfig {
 
         @Serializable
-        data object Users : UserConfig
+        data object Users : UserConfig()
 
         @Serializable
-        data object CurrentUser : UserConfig
+        data class CurrentUser(val userId: Long) : UserConfig()
     }
 
     @AssistedFactory
     interface Factory {
 
         fun create(
-            @Assisted("userDependencies") userDependencies: UserDependencies,
             @Assisted("componentContext") componentContext: ComponentContext
         ): DefaultUserRootComponent
     }

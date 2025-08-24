@@ -5,7 +5,9 @@ import ru.mavrinvladislav.user.domain.model.User
 
 interface UserRepository {
 
-    fun getUsers(
-        page: Int,
-    ): Flow<List<User>>
+    suspend fun clearUsers()
+
+    fun getUsers(): Flow<List<User>>
+
+    suspend fun getUserById(id: Long): User
 }

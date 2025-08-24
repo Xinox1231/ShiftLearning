@@ -72,8 +72,7 @@ dependencies {
     implementation(libs.mvikotlin.core)
     implementation(libs.mvikotlin.coroutines)
 
-    //Coil
-    implementation(libs.coil)
+
 
     ksp(libs.dagger.compiler)
 }

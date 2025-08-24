@@ -99,6 +99,7 @@ fun PictureDto.toEntity(): PictureDb =
 
 fun UserDb.toDomain(): User =
     User(
+        id = id,
         gender = gender,
         name = name.toDomain(),
         location = location.toDomain(),
