@@ -83,7 +83,7 @@ class CurrentUserStoreFactory @Inject constructor(
                 is Intent.OnPhoneClicked -> {
                     val state = getState()
                     if (state.state is State.UserState.Loaded) {
-                        publish(OnPhoneClicked(state.state.user.phone))
+                        publish(OnPhoneClicked(state.state.user.cell))
                     }
                 }
 
