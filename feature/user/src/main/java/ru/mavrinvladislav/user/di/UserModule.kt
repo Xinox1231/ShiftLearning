@@ -7,11 +7,16 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import ru.mavrinvladislav.user.data.remote.UserService
+import ru.mavrinvladislav.user.data.remote.datasource.UserRemoteDataSource
 import ru.mavrinvladislav.user.data.repository.UserRepositoryImpl
 import ru.mavrinvladislav.user.domain.repository.UserRepository
 
 @Module
 internal interface UserModule {
+
+    @Binds
+    @UserFeatureScope
+    fun bindUserRemoteDataSource(userService: UserService): UserRemoteDataSource
 
     @Binds
     @UserFeatureScope

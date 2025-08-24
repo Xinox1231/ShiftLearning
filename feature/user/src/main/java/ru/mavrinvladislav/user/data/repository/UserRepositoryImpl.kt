@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import ru.mavrinvladislav.db.datasource.UserLocalDataSource
 import ru.mavrinvladislav.db.entity.UserDb
-import ru.mavrinvladislav.user.data.remote.UserService
+import ru.mavrinvladislav.user.data.remote.datasource.UserRemoteDataSource
 import ru.mavrinvladislav.user.data.toDomain
 import ru.mavrinvladislav.user.data.toEntity
 import ru.mavrinvladislav.user.domain.model.User
@@ -13,7 +13,7 @@ import ru.mavrinvladislav.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 internal class UserRepositoryImpl @Inject constructor(
-    private val api: UserService,
+    private val api: UserRemoteDataSource,
     private val dao: UserLocalDataSource
 ) : UserRepository {
 
