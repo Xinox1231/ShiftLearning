@@ -38,14 +38,14 @@ data class ShiftColorScheme(
     val indicatorAttention: Color,
     val indicatorPositive: Color,
 
-    // Brand Pizza
-    val brandPizzaPrimary: Color,
-    val brandPizzaPressed: Color,
-    val brandPizzaHover: Color,
-    val brandPizzaExtraLight: Color,
-    val brandPizzaDisabled: Color,
-    val brandPizzaIndicatorFocused: Color,
-    val brandPizzaIndicatorFocusedAlternative: Color
+    // Brand
+    val brandPrimary: Color,
+    val brandPressed: Color,
+    val brandHover: Color,
+    val brandExtraLight: Color,
+    val brandDisabled: Color,
+    val brandIndicatorFocused: Color,
+    val brandIndicatorFocusedAlternative: Color
 )
 
 private val LightColorScheme = ShiftColorScheme(
@@ -77,14 +77,14 @@ private val LightColorScheme = ShiftColorScheme(
     indicatorAttention = Indicator_Attention,
     indicatorPositive = Indicator_Positive,
 
-    // Brand Pizza
-    brandPizzaPrimary = Pizza_Brand,
-    brandPizzaPressed = Pizza_Pressed_Primary,
-    brandPizzaHover = Pizza_Hover_Primary,
-    brandPizzaExtraLight = Pizza_Brand_ExtraLight,
-    brandPizzaDisabled = Pizza_Brand_Disabled,
-    brandPizzaIndicatorFocused = Pizza_Indicator_Focused,
-    brandPizzaIndicatorFocusedAlternative = Pizza_Indicator_Focused_alternative
+    // Brand
+    brandPrimary = Brand,
+    brandPressed = Pressed_Primary,
+    brandHover = Hover_Primary,
+    brandExtraLight = Brand_ExtraLight,
+    brandDisabled = Brand_Disabled,
+    brandIndicatorFocused = Indicator_Focused,
+    brandIndicatorFocusedAlternative = Indicator_Focused_alternative
 )
 
 private val DarkColorScheme = LightColorScheme.copy()

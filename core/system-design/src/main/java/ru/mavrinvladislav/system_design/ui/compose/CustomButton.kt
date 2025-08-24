@@ -30,9 +30,9 @@ fun CustomButton(
         enabled = enabled,
         shape = shape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = ShiftTheme.colors.brandPizzaPrimary,
+            containerColor = ShiftTheme.colors.brandPrimary,
             contentColor = ShiftTheme.colors.textInvert,
-            disabledContentColor = ShiftTheme.colors.brandPizzaDisabled,
+            disabledContentColor = ShiftTheme.colors.brandDisabled,
             disabledContainerColor = ShiftTheme.colors.textInvert
         )
     ) {

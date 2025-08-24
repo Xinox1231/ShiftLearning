@@ -30,11 +30,12 @@ val Indicator_Error = Color(0xFFF64C4C)
 val Indicator_Attention = Color(0x3DFFB219)
 val Indicator_Positive = Color(0xDE40BF7F)
 
-// Brand Colors Pizza
-val Pizza_Brand = Color(0xFFF4511E)
-val Pizza_Pressed_Primary = Color(0xFFE64A19)
-val Pizza_Hover_Primary = Color(0xFFD84315)
-val Pizza_Brand_ExtraLight = Color(0xFFFFAB91)
-val Pizza_Brand_Disabled = Color(0xFFFFAB91)
-val Pizza_Indicator_Focused = Color(0xFFF4511E)
-val Pizza_Indicator_Focused_alternative = Color(0xFFF4511E)
+// Brand Colors
+
+val Brand = Color(0xFFF4511E)
+val Pressed_Primary = Color(0xFFE64A19)
+val Hover_Primary = Color(0xFFD84315)
+val Brand_ExtraLight = Color(0xFFFFAB91)
+val Brand_Disabled = Color(0xFFFFAB91)
+val Indicator_Focused = Color(0xFFF4511E)
+val Indicator_Focused_alternative = Color(0xFFF4511E)
